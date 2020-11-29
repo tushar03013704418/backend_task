@@ -19,6 +19,13 @@ $counter =0;
 if(isset($data->stateId))
 {
 	$query = "select * from district where stateId = '".$data->stateId."'";
+}
+else
+{
+	$query = "select * from district";
+	
+}
+	
 	$executeQuery = $conn->query($query);
 	 
 	if ($executeQuery->num_rows > 0) {
@@ -27,7 +34,11 @@ if(isset($data->stateId))
 			
 			$district[$counter]['id'] = $row['id'];
 			$district[$counter]['name'] = $row['name'];
-			$district[$counter]['stateId'] = $row['stateid'];
+			$stateQuery   = "select * from state where id = '".$row['stateid']."'";
+			$executeStateQuery = $conn->query($stateQuery);
+			$stateRow = mysqli_fetch_assoc($executeStateQuery);
+			$district[$counter]['stateName'] = $stateRow['name'];
+			
 			$counter++;
 		}
 
@@ -50,12 +61,11 @@ if(isset($data->stateId))
   
 	}
 }
-}	
 else 
  echo json_encode(
 				array(
 					"result"=> 0,
-					"message" => "state id not define"
+					"message" => "user not logged in "
 					
 				)
 			);	

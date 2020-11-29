@@ -20,6 +20,10 @@ $counter =0;
 if(isset($data->childId))
 {
 	$query = "select * from child where id = '".$data->childId."'";
+}
+else
+	$query = "select * from child";
+
 	$executeQuery = $conn->query($query);
 	 
 	if ($executeQuery->num_rows > 0) {
@@ -32,8 +36,22 @@ if(isset($data->childId))
 			$child[$counter]['birthDate'] = $row['birthDate'];
 			$child[$counter]['fatherName'] = $row['fatherName'];
 			$child[$counter]['motherName'] = $row['motherName'];
-			$child[$counter]['stateId'] = $row['stateId'];
-			$child[$counter]['districtId'] = $row['districtId'];
+			$child[$counter]['image'] = $row['image'];
+			if($row['stateId'] > 0)
+			{	
+				$stateQuery   = "select * from state where id = '".$row['stateId']."'";
+				$executeStateQuery = $conn->query($stateQuery);
+				$stateRow = mysqli_fetch_assoc($executeStateQuery);
+				$child[$counter]['state'] = $stateRow['name'];
+			}
+			
+			if($row['districtId'] > 0)
+			{	
+				$districtQuery   = "select * from district where id = '".$row['districtId']."'";
+				$executeDistrictQuery = $conn->query($districtQuery);
+				$districtRow = mysqli_fetch_assoc($executeDistrictQuery);
+				$child[$counter]['district'] = $districtRow['name'];
+			}	
 			$counter++;
 		}
 
@@ -55,7 +73,7 @@ if(isset($data->childId))
 			);
   
 	}
-}
+
 }	
 else 
  echo json_encode(

@@ -19,7 +19,7 @@ if(isset($_SESSION['username']))
 	$counter =0;
 	if(isset($data->districtName) && isset($data->stateId))
 	{
-		$query = "select * from district where name = '".$data->districtName."' and DistrictId = '".$data->stateId."'";
+		$query = "select * from district where name = '".$data->districtName."' and stateId = '".$data->stateId."'";
 		$executeQuery = $conn->query($query);
 		 
 		if (isset($executeQuery->num_rows) && $executeQuery->num_rows > 0) {

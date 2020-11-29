@@ -29,7 +29,8 @@ if(isset($data->stateName))
 					"message" => "State already exists"
 				)
 			);
-	} else {
+	}
+	else {
 	  
 	  $insertQuery = "INSERT INTO `state`(`name`) VALUES ('$data->stateName')";
 	  $executeInsert = $conn->query($insertQuery);
@@ -49,7 +50,7 @@ else
  echo json_encode(
 				array(
 					"result"=> 0,
-					"message" => "state id not define"
+					"message" => "your user not logged in"
 					
 				)
 			);	

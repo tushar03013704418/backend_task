@@ -4,6 +4,7 @@ include('config.php');
 
 
 
+session_start();
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -11,8 +12,10 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 
-session_start();
+
 $data = json_decode(file_get_contents("php://input"));
+$user= array();
+$counter = 0 ;
 
 if(isset($data->username)  && isset($data->password))
 {
@@ -25,12 +28,16 @@ if(isset($data->username)  && isset($data->password))
 	$executeQuery = $conn->query($query);
 	 
 	if ($executeQuery->num_rows > 0) {
-	 
+	while($row = mysqli_fetch_assoc($executeQuery)) {
+		$user[$counter]['name'] = $row['name']; 
+		$user[$counter]['designation'] = $row['designation']; 
+		$user[$counter]['organisation'] = $row['organisation']; 
+	}
 	  echo json_encode(
 				array(
 					"result" => 1,
-					"message" => "Successful login."
-					
+					"message" => "Successful login.",
+					"user" => $user
 				)
 			);
 	} else {

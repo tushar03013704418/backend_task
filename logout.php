@@ -3,7 +3,9 @@
 include('config.php');
 
 
+
 session_start();
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -22,31 +24,31 @@ if(isset($_SESSION['username']))
 					
 				)
 			);
-		session_destroy();
-		session_commit();
+			session_destroy();
+			session_commit();
+		
 	}
 	else
 	{
 		echo json_encode(
 				array(
 					"result"=> 0,
-					"message" => "invalid user"
+					"message" => "invaild user"
 					
 				)
 			);
 	}	
 	
 }
-else
-{
-		echo json_encode(
-				array(
-					"result"=> 0,
-					"message" => "user already logged out"
-					
-				)
-			);
+else{
+	echo json_encode(
+		array(
+			"result"=> 0,
+			"message"=> "user already logged out"
+		)
+	);
 	
 }
+
 	
 ?>
